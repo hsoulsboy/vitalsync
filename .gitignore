@@ -1,0 +1,4 @@
+go.mod
+database/data
+*.env
+*.sum
