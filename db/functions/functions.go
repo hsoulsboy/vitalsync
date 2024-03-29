@@ -53,6 +53,8 @@ func CountAllDocuments(collection *mongo.Collection) (int64, error) {
 	return numOfDocs, nil
 }
 
+// InsertDocument adds a new document to a given collection
+// It returns the entry ID
 func InsertDocument(collection *mongo.Collection, metaData db.MetaData) (*mongo.InsertOneResult, error) {
 
 	result, err := collection.InsertOne(context.Background(), metaData)
