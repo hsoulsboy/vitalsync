@@ -6,6 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	db "vitalsync/db/metadata"
 )
 
 const (
@@ -49,4 +51,15 @@ func CountAllDocuments(collection *mongo.Collection) (int64, error) {
 	}
 
 	return numOfDocs, nil
+}
+
+func InsertDocument(collection *mongo.Collection, metaData db.MetaData) (*mongo.InsertOneResult, error) {
+
+	result, err := collection.InsertOne(context.Background(), metaData)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
