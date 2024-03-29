@@ -1,7 +1,7 @@
 package db
 
 type Patient struct {
-	ID                  string
+	SSN                 string
 	Name                string
 	Age                 string
 	Gender              string

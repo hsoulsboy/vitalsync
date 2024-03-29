@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -64,4 +65,24 @@ func InsertDocument(collection *mongo.Collection, metaData db.MetaData) (*mongo.
 	}
 
 	return result, nil
+}
+
+// GetPatientBySSN retrieves a Patient given its Social Security Number (SSN)
+// It returns the Patient document
+func GetPatientBySSN(collection *mongo.Collection, patientSSN string) (db.MetaData, error) {
+
+	cursor, err := collection.Find(context.Background(), bson.D{{Key: "ssn", Value: patientSSN}})
+
+	if err != nil {
+		return nil, fmt.Errorf("error during document search: %v", err)
+	}
+
+	var results []db.Patient
+	err = cursor.All(context.Background(), &results)
+
+	if err != nil {
+		return nil, fmt.Errorf("error during document decoding: %v", err)
+	}
+
+	return results, nil
 }
