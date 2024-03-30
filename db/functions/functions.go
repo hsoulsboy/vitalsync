@@ -106,3 +106,23 @@ func GetAllPatients(collection *mongo.Collection) (db.MetaData, error) {
 
 	return results, nil
 }
+
+// GetAllPatients retrieves all Patients from a given collection
+// It returns a slice containing all Patient entries: []Patient
+func GetAllElectroCardiogramDevices(collection *mongo.Collection) (db.MetaData, error) {
+
+	cursor, err := collection.Find(context.Background(), bson.D{})
+
+	if err != nil {
+		return nil, fmt.Errorf("error during document search: %v", err)
+	}
+
+	var results []db.ElectroCardiogramDevice
+	err = cursor.All(context.Background(), &results)
+
+	if err != nil {
+		return nil, fmt.Errorf("error during document decoding: %v", err)
+	}
+
+	return results, nil
+}
