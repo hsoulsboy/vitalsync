@@ -68,7 +68,7 @@ func InsertDocument(collection *mongo.Collection, metaData db.MetaData) (*mongo.
 }
 
 // GetPatientBySSN retrieves a Patient given its Social Security Number (SSN)
-// It returns the Patient document
+// It returns a slice containing filtered Patient entries: []Patient
 func GetPatientBySSN(collection *mongo.Collection, patientSSN string) (db.MetaData, error) {
 
 	cursor, err := collection.Find(context.Background(), bson.D{{Key: "ssn", Value: patientSSN}})
@@ -87,6 +87,8 @@ func GetPatientBySSN(collection *mongo.Collection, patientSSN string) (db.MetaDa
 	return results, nil
 }
 
+// GetAllPatients retrieves all Patients from a given collection
+// It returns a slice containing all Patient entries: []Patient
 func GetAllPatients(collection *mongo.Collection) (db.MetaData, error) {
 
 	cursor, err := collection.Find(context.Background(), bson.D{})
